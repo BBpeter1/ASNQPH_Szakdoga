@@ -1,0 +1,10 @@
+rootProject.name = 'KonyvtarShop'
+include 'app'
+include 'service'
+include 'domain'
+include 'controller'
+include 'security'
+include 'model'
+include 'transformer'
+include 'domain'
+
