@@ -1,0 +1,64 @@
+<div class="row">
+    <input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search...">
+</div>
+
+<h2>Termékek listája</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+            <th scope="col">Termék létrehozója</th>
+            <th scope="col">Termék leírása</th>
+            <th scope="col">Termék kategóriája</th>
+            <th scope="col">Szerkesztés</th>
+            <th scope="col">Törlés</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of filteredBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{book.category}}</td>
+            <td><button class="btn btn-sm btn-outline-primary"
+                (click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
+            <td><button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book)">Törlés</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<hr>
+<h2>Elérhető termékek listája</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+            <th scope="col">Termék létrehozója</th>
+            <th scope="col">Termék leírása</th>
+            <th scope="col">Termék kategóriája</th>
+            <th scope="col">Termék kölcsönzésének ideje</th>
+            <th scope="col">Kölcsönzés</th>
+            <th scope="col">Visszahozás</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of availableBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{ book.category }}</td>
+            <td>{{ book.borrowDate }}</td>
+            <td ><button class="btn btn-sm btn-outline-primary" (click)="borrowBook(userId, book.id)">Borrow</button></td>
+            <td><button class="btn btn-sm btn-outline-primary" (click)="returnBook(userId, book.id)">Return</button></td>
+		</tr>
+	</tbody>
+</table>
+

@@ -1,0 +1,31 @@
+<div class="row">
+    <input type="text" [(ngModel)]="searchTerm" (input)="searchUsers()" name="searchTerm" placeholder="Search...">
+</div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Felhasználó neve</th>
+			<th scope="col">Inaktivált felhasználó?</th>
+            <th scope="col">Felhasználó címe</th>
+            <th scope="col">Felhasználó telefonszáma</th>
+            <th scope="col">Felhasználó személyigazolvány száma</th>
+            <th scope="col">Szerkesztés</th>
+            <th scope="col">Törlés</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let user of filteredUsers">
+			<th scope="row">{{ user.id | number }}</th>
+			<td>{{ user.name }}</td>
+			<td>{{ user.isActive }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{user.szisz}}</td>
+            <td *ngIf="authService.isLoggedIn()"><button class="btn btn-sm btn-outline-primary"
+                (click)="navigateToUserForm(user.id)">Szerkesztés</button></td>
+            <td *ngIf="authService.isLoggedIn()"><button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user)">Törlés</button></td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Termék címe</th>
+      <th scope="col">Kölcsönző neve</th>
+      <th scope="col">Kikölcsönzés napja</th>
+      <th scope="col">Számított késés</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of overdueBooks">
+      <th scope="row">{{ book.id | number }}</th>
+      <td>{{ book.borrower.name }}</td>
+      <td>{{ book.borrowDate }}</td>
+      <td>{{ book.delay }} days</td>
+    </tr>
+  </tbody>
+</table>

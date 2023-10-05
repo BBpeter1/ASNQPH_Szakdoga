@@ -1,0 +1,40 @@
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <h4>Könyv adatok</h4>
+        <hr>
+    </div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <form [formGroup]="bookForm">
+            <div class="mb-3">
+                <label for="title" class="form-label">Cím</label>
+                <input type="text" class="form-control" id="title" name="title" formControlName = "title">
+            </div>
+            <div class="mb-3">
+                <label for="Author" class="form-label">Szerző</label>
+                <input type="text" class="form-control" id="Author" name="Author" formControlName = "Author">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Leírás</label>
+                <textarea class="form-control" name="description" id="description" rows="3" formControlName = "description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Kiadás éve</label>
+                <input type="date" class="form-control" id="date" name="date" formControlName = "date">
+            </div>
+            <div class="mb-3">
+                <select name="category" class="form-select" formControlName = "category">
+                    <option value = "cd">CD</option>
+                    <option value = "kazetta">Kazetta</option>
+                    <option value = "könyv">könyv</option>
+                </select>
+                <label for="category" class="form-label">Kategória [cd,könyv,kazetta]</label>
+                <input type="text" class="form-control" id="category" name="category" formControlName = "category">
+            </div>
+            <div class="text-end">
+                <button class="btn btn-outline-primary" (click) ="saveProduct()">Mentés</button>
+            </div>
+        </form>
+    </div>
+</div>

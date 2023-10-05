@@ -1,0 +1,18 @@
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <form [formGroup]="loginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail cím</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Jelszó</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-outline-primary" (click)="login()">Belépés</button>
+            </div>
+        </form>
+    </div>
+</div>
