@@ -8,6 +8,7 @@ import { OverdueBooksComponent } from './overdue-books/overdue-books.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { RegistrationComponent } from './registration/registration.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -46,11 +47,16 @@ const routes: Routes = [
     component: OverdueBooksComponent
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'statistics',
+    canActivate: [() => inject(AuthService).preventGuestAccess()],
+    component: StatisticsComponent
   },
   {
     path: '',
+    component: LoginComponent
+  },
+  {
+    path: 'registration',
     component: RegistrationComponent
   },
 ];

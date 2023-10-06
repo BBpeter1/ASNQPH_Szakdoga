@@ -24,13 +24,19 @@
                 <input type="date" class="form-control" id="date" name="date" formControlName = "date">
             </div>
             <div class="mb-3">
+                <label for="price" class="form-label">Ár</label>
+                <div class="input-group">
+                    <input type="number" step="1" class="form-control text-end pe-1" id="price" name="price" formControlName="price">
+                    <span class="input-group-text"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Kategória [cd,könyv,kazetta]</label>
                 <select name="category" class="form-select" formControlName = "category">
                     <option value = "cd">CD</option>
                     <option value = "kazetta">Kazetta</option>
                     <option value = "könyv">könyv</option>
                 </select>
-                <label for="category" class="form-label">Kategória [cd,könyv,kazetta]</label>
-                <input type="text" class="form-control" id="category" name="category" formControlName = "category">
             </div>
             <div class="text-end">
                 <button class="btn btn-outline-primary" (click) ="saveProduct()">Mentés</button>

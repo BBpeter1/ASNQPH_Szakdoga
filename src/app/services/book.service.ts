@@ -13,7 +13,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
+  getAll(): Observable<BookDTO[]>{
     return this.http.get<BookDTO[]>('/api/books/');
   }
 
@@ -35,6 +35,18 @@ export class BookService {
 
   getAvailableBooks(): Observable<BookDTO[]> {
     return this.http.get<BookDTO[]>('/api/books/available');
+  }
+
+  getSoldBooks(): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>('/api/books/sold');
+  }
+
+  getBorrowedBooks(): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>('/api/books/borrowed');
+  }
+
+  sellBook(userId: number, bookId: number): Observable<any> {
+    return this.http.post('api/books/sell', { userId, bookId });
   }
 
   borrowBook(userId: number, bookId: number): Observable<any> {

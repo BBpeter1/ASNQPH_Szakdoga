@@ -26,6 +26,9 @@ export class User implements UserDTO {
     @OneToMany(() => User, user => user.borrowedBooks)
     borrowedBooks: Book[];
 
+    @OneToMany(() => User, user => user.soldBooks)
+    soldBooks: Book[];
+
     @Column()
     email: string;
 

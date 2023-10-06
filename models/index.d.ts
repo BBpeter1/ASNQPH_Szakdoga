@@ -8,6 +8,7 @@ export interface UserDTO {
     email: string;
     password: string;
     borrowedBooks: BookDTO[];
+    soldBooks: BookDTO[];
 }
 
 export interface LoginDTO {
@@ -19,7 +20,6 @@ export interface AccessTokenDTO {
     accessToken: string;
 }
 
-
 export interface StatusDTO {
     id: number;
     title: string;
@@ -28,10 +28,12 @@ export interface StatusDTO {
 export interface BookDTO {
     id: number;
     title: string;
+    price:number;
     description: string;
     Author: string;
     date: string;
     borrowDate: string;
+    soldDate: string;
     category: string;
     status: string;
 }

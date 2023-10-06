@@ -16,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { AccessTokenInterceptor } from './services/access-token.interceptor';
 import { UnauthorizedInterceptor } from './services/unauthorized.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
+import { PdfmakerComponent } from './pdfmaker/pdfmaker.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { RegistrationComponent } from './registration/registration.component';
     UserFormComponent,
     OverdueBooksComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    PdfmakerComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

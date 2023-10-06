@@ -2,6 +2,28 @@
     <input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search...">
 </div>
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<label for="selectedAuthor" class="form-label">Termék szerzője</label>
+			<select name="selectedAuthor" id="selectedAuthor" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedAuthor" (ngModelChange)="filterTable()">
+				<option value="">Összes</option>
+				<option *ngFor="let book of books" [ngValue]="{ Author: book.Author }">
+					{{ book.Author }}
+				</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<label for="fromDate" class="form-label">Kezdő dátum</label>
+			<input type="date" class="form-control" id="fromDate" name="fromDate" [(ngModel)]="selectedStartDate" (ngModelChange)="filterTable()">
+		</div>
+		<div class="col-md-3">
+			<label for="toDate" class="form-label">Vég dátum</label>
+			<input type="date" class="form-control" id="toDate" name="toDate" [(ngModel)]="selectedEndDate" (ngModelChange)="filterTable()">
+		</div>
+	</div>
+</div>
 <h2>Termékek listája</h2>
 <table class="table table-striped">
 	<thead>
@@ -12,18 +34,20 @@
             <th scope="col">Termék létrehozója</th>
             <th scope="col">Termék leírása</th>
             <th scope="col">Termék kategóriája</th>
+            <th scope="col">Termék ára</th>
             <th scope="col">Szerkesztés</th>
             <th scope="col">Törlés</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let book of filteredBooks">
+		<tr *ngFor="let book of filteredBook">
 			<th scope="row">{{ book.id | number }}</th>
 			<td>{{ book.date }}</td>
 			<td>{{ book.title }}</td>
             <td>{{ book.Author }}</td>
             <td>{{ book.description }}</td>
             <td>{{book.category}}</td>
+            <td>{{book.price}}</td>
             <td><button class="btn btn-sm btn-outline-primary"
                 (click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
             <td><button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book)">Törlés</button></td>
@@ -31,7 +55,6 @@
 	</tbody>
 </table>
 
-<hr>
 <h2>Elérhető termékek listája</h2>
 <table class="table table-striped">
 	<thead>
@@ -42,9 +65,9 @@
             <th scope="col">Termék létrehozója</th>
             <th scope="col">Termék leírása</th>
             <th scope="col">Termék kategóriája</th>
-            <th scope="col">Termék kölcsönzésének ideje</th>
+            <th scope="col">Termék ára</th>
+            <th scope="col">Vásárlás</th>
             <th scope="col">Kölcsönzés</th>
-            <th scope="col">Visszahozás</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -55,10 +78,35 @@
             <td>{{ book.Author }}</td>
             <td>{{ book.description }}</td>
             <td>{{ book.category }}</td>
-            <td>{{ book.borrowDate }}</td>
-            <td ><button class="btn btn-sm btn-outline-primary" (click)="borrowBook(userId, book.id)">Borrow</button></td>
-            <td><button class="btn btn-sm btn-outline-primary" (click)="returnBook(userId, book.id)">Return</button></td>
+            <td>{{ book.price }}</td>
+            <td><button class="btn btn-sm btn-outline-primary" (click)="sellBook(userId, book.id)">Vásárol</button></td>
+            <td ><button class="btn btn-sm btn-outline-primary" (click)="borrowBook(userId, book.id)">Kölcsönöz</button></td>
 		</tr>
 	</tbody>
 </table>
 
+<h2>Kikölcsönzött termékek listája</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+            <th scope="col">Termék létrehozója</th>
+            <th scope="col">Termék leírása</th>
+            <th scope="col">Termék kategóriája</th>
+            <th scope="col">Visszahozás</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of borrowedBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{ book.category }}</td>
+            <td><button class="btn btn-sm btn-outline-primary" (click)="returnBook(userId, book.id)">Visszahoz</button></td>
+		</tr>
+	</tbody>
+</table>

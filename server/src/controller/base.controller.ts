@@ -91,6 +91,24 @@ export abstract class Controller {
         }
     };
 
+    getSoldBooks = async (req, res) => {
+        try {
+            const books = await this.repository.find({ where: { status: 'eladott' } });
+            res.json(books);
+        } catch (error) {
+            res.status(500).json({ message: 'Error retrieving sold books' });
+        }
+    };
+
+    getBorrowedBooks = async (req, res) => {
+        try {
+            const books = await this.repository.find({ where: { status: 'kölcsönzött' } });
+            res.json(books);
+        } catch (error) {
+            res.status(500).json({ message: 'Error retrieving sold books' });
+        }
+    };
+
     borrowBook = async (req, res) => {
         try {
 
@@ -125,12 +143,42 @@ export abstract class Controller {
         }
     };
 
+    sellBook = async (req, res) => {
+        try {
+
+            const { bookId, userId } = req.body;
+
+            const user = await this.repository.findOneBy({ id: req.auth.id });
+            const book = await this.repository.findOneBy({ id: req.auth.id });
+
+        
+            if (!user || !book) {
+                return res.status(404).json({ message: 'User or book not found' });
+            }
+
+            user.soldBooks = await AppDataSource.getRepository(Book).findBy({ sold: { id: req.auth.id } })
+
+            book.status = 'eladott';
+            book.soldDate = new Date();
+
+            user.soldBooks.push(book);
+
+            await this.repository.save(user);
+            await this.repository.save(book);
+
+            res.json({ message: 'Book sold successfully' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error solding book' });
+        }
+    };
+
     returnBook = async (req, res) => {
         try {
-            const { userId, bookId } = req.body;
+            const { bookId } = req.body;
 
-            const user = await this.repository.findOne(userId);
-            const book = await this.repository.findOne(bookId);
+            const user = await this.repository.findOneBy({id: req.auth.id} );
+            const book = await this.repository.findOneBy({id: bookId});
 
             if (!user || !book) {
                 return res.status(404).json({ message: 'User or book not found' });
@@ -156,7 +204,7 @@ export abstract class Controller {
             const overdueBooks = await this.repository
                 .createQueryBuilder('book')
                 .leftJoinAndSelect('book.borrower', 'user')
-                .where('book.status = :status', { status: 'kölcsönözve' })
+                .where('book.status = :status', { status: 'kölcsönzött' })
                 .andWhere('book.borrowDate <= :dueDate', {
                     dueDate: new Date(new Date().getTime() - overdueDays * 24 * 60 * 60 * 1000).toISOString(),
                 })

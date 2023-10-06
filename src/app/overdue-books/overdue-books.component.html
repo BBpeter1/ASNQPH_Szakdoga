@@ -11,6 +11,7 @@
   <tbody>
     <tr *ngFor="let book of overdueBooks">
       <th scope="row">{{ book.id | number }}</th>
+      <td>{{book.title}}</td>
       <td>{{ book.borrower.name }}</td>
       <td>{{ book.borrowDate }}</td>
       <td>{{ book.delay }} days</td>

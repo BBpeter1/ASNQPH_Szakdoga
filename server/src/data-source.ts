@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     host: "localhost",
     port: 3306,
     username: "root",
-    database: "infriend2023_webshop_k16",
+    database: "libraryshop_asnqph",
     synchronize: true,
     logging: true,
     entities: [User, Book, Category],

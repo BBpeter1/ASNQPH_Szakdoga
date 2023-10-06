@@ -25,6 +25,7 @@ export class BookFormComponent implements OnInit {
     Author: this.formBuilder.control(''),
     status: this.formBuilder.control('szabad'),
     category: this.formBuilder.control(''),
+    price: this.formBuilder.control(0),
     date: this.formBuilder.control(new Date().toISOString().split('T')[0])
   });
   
@@ -89,5 +90,3 @@ export class BookFormComponent implements OnInit {
   }
 
 }
-
-

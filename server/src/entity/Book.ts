@@ -11,6 +11,9 @@ export class Book implements BookDTO {
     @Column({nullable: true, type: 'text'})
     title: string;
 
+    @Column({nullable: true})
+    price: number
+
     @Column({nullable: true, type: 'text'})
     category: string;
 
@@ -26,11 +29,16 @@ export class Book implements BookDTO {
     @Column({nullable: true, type: 'date' })
     borrowDate: string;
 
+    @Column({nullable: true, type: 'date' })
+    soldDate: string;
+
     @Column({nullable: true, type: 'text' })
     status: string;
 
-
     @ManyToOne(() => User, user => user.borrowedBooks, {eager:true})
     borrower: User;
+
+    @ManyToOne(() => User, user => user.soldBooks, {eager:true})
+    sold: User;
 
 }

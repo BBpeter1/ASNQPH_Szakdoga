@@ -1,0 +1,56 @@
+<h2>Eladott termékek</h2> 
+	<h3 align = "right">Összesen: </h3><h4 align = "right">{{soldBooksCount}}</h4>
+
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+            <th scope="col">Termék létrehozója</th>
+            <th scope="col">Termék leírása</th>
+            <th scope="col">Termék kategóriája</th>
+            <th scope="col">Termék elkeltének dátuma</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of soldBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{book.category}}</td>
+            <td>{{ book.soldDate }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>Kölcsönzött termékek</h2>
+<h3 align = "right">Összesen: </h3><h4 align = "right">{{borrowedBooksCount}}</h4>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+            <th scope="col">Termék létrehozója</th>
+            <th scope="col">Termék leírása</th>
+            <th scope="col">Termék kategóriája</th>
+            <th scope="col">Termék kikölcsönzésének dátuma</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of borrowedBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{book.category}}</td>
+            <td>{{ book.borrowDate }}</td>
+		</tr>
+	</tbody>
+</table>

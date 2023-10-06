@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { CategoryDTO } from "../../../models";
 
 @Entity()
-export class Category implements CategoryDTO
+export class Category
 {
     @PrimaryGeneratedColumn()
     id: number;
