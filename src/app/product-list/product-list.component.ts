@@ -22,7 +22,7 @@ export class BookListComponent implements OnInit {
   availableBooks: BookDTO[] = [];
   borrowedBooks: BookDTO[] = [];
   searchTerm: string = '';
-  userId: number = 0;
+  userId: number = 1;
   selectedStartDate: string = '';
   selectedEndDate: string = '';
   selectedAuthor: string = '';
