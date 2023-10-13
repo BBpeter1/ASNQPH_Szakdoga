@@ -22,7 +22,8 @@ export class BookListComponent implements OnInit {
   availableBooks: BookDTO[] = [];
   borrowedBooks: BookDTO[] = [];
   searchTerm: string = '';
-  userId: number = 1;
+  userId: number = 0;
+  bookId: number = 0;
   selectedStartDate: string = '';
   selectedEndDate: string = '';
   selectedAuthor: string = '';
@@ -33,6 +34,7 @@ export class BookListComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     private activatedRoute: ActivatedRoute) {
+      this.loadData();
       
   }
   ngOnInit(): void {
@@ -49,6 +51,18 @@ export class BookListComponent implements OnInit {
 
   navigateToProductForm(id:number) {
     this.router.navigate(['/product-form',id]);
+  }
+
+  loadData(): void {
+    this.bookService.getAll().subscribe(
+      (books) => {
+        this.books = books;
+        this.filterBooks();
+      },
+      (error) => {
+        this.toastrService.error('A véradás űrlapjának betöltése nem sikerült.', 'Hiba');
+      }
+    );
   }
 
   deleteBook(book: BookDTO) {
@@ -112,6 +126,8 @@ export class BookListComponent implements OnInit {
         console.log('Error borrowing book:', error);
       }
     );
+
+    console.log(userId + ' +' + bookId);
   }
 
   sellBook(userId: number, bookId: number) {
@@ -139,7 +155,7 @@ export class BookListComponent implements OnInit {
   }
 
   filterTable() {
-    this.filteredBook = this.books.filter((book) => {
+    this.filteredBooks = this.books.filter((book) => {
       const matchesFirstSelector = this.selectedAuthor === '' || book.Author === this.selectedAuthor;
 
       const startDate = this.selectedStartDate ? new Date(this.selectedStartDate) : null;
@@ -153,7 +169,39 @@ export class BookListComponent implements OnInit {
     });
 
     if (!this.selectedAuthor && !this.selectedStartDate && !this.selectedEndDate) {
-      this.filteredBook = this.books;
+      this.filteredBooks = this.books;
+    }
+  }
+
+  filterBooks() {
+    const searchTerm = this.searchTerm.toLowerCase().trim();
+    const matchesAuthor = this.selectedAuthor === '';
+    const startDate = this.selectedStartDate ? new Date(this.selectedStartDate) : null;
+    const endDate = this.selectedEndDate ? new Date(this.selectedEndDate) : null;
+
+    this.filteredBooks = this.books.filter((book) => {
+      const itemDate = new Date(book.date);
+      const isDateInRange =
+        (!startDate || itemDate >= startDate) &&
+        (!endDate || itemDate <= endDate);
+
+      return (
+        (searchTerm === '' ||
+          book.title.toLowerCase().includes(searchTerm) ||
+          book.Author.toLowerCase().includes(searchTerm) ||
+          book.description.toLowerCase().includes(searchTerm)) &&
+        (matchesAuthor || book.Author === this.selectedAuthor) &&
+        isDateInRange
+      );
+    }).sort((a, b) => a.title.localeCompare(b.title));
+
+    if (
+      searchTerm === '' &&
+      !this.selectedAuthor &&
+      !this.selectedStartDate &&
+      !this.selectedEndDate
+    ) {
+      this.filteredBooks = this.books.slice();
     }
   }
 

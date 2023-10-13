@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     private activatedRoute: ActivatedRoute) {
+      this.loadData();
     
   }
   ngOnInit(): void {
@@ -30,6 +31,18 @@ export class UserListComponent implements OnInit {
       {
         next: (users) => {this.users = users},
         error: (err) => {this.toastr.error('Hiba')},
+      }
+    );
+  }
+
+  loadData(): void {
+    this.userService.getAll().subscribe(
+      (users) => {
+        this.users = users;
+        this.searchUsers();
+      },
+      (error) => {
+        this.toastrService.error('A véradás űrlapjának betöltése nem sikerült.', 'Hiba');
       }
     );
   }

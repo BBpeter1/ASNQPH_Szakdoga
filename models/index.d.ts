@@ -36,4 +36,5 @@ export interface BookDTO {
     soldDate: string;
     category: string;
     status: string;
+    delay: number;
 }

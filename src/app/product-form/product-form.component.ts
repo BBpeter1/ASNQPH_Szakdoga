@@ -15,7 +15,6 @@ import { ActivatedRoute } from '@angular/router';
 export class BookFormComponent implements OnInit {
 
   isNewProduct = true;
-
   users: UserDTO[] = [];
 
   bookForm = this.formBuilder.group({
@@ -72,13 +71,13 @@ export class BookFormComponent implements OnInit {
       if (this.isNewProduct)
       {
       this.bookService.create(book).subscribe({
-        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Book created')},
+        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Product created')},
         error: (err) => {this.toastr.error('Gatya', 'Hiba')}
       });
     }
     else{
       this.bookService.update(book).subscribe({
-        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Book updated')},
+        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Product updated')},
         error: (err) => {this.toastr.error('Gatya', 'Hiba')}
     });
   }

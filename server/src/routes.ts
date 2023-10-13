@@ -14,9 +14,9 @@ export function getRoutes() {
     router.get('/books/available', bookController.getAvailableBooks);
     router.get('/books/borrowed', bookController.getBorrowedBooks);
     router.get('/books/sold', bookController.getSoldBooks);
-    router.post('/books/borrow',  bookController.borrowBook);
-    router.post('/books/sell', bookController.sellBook);
-    router.post('/books/return', bookController.returnBook);
+    router.post('/books/borrow', checkUser, bookController.borrowBook);
+    router.post('/books/sell', checkUser, bookController.sellBook);
+    router.post('/books/return',checkUser, bookController.returnBook);
     router.get('/books/overdue', bookController.getOverdueBooks);
     router.get('/books/:id', bookController.getOne);
     router.delete('/books/:id', checkUser, bookController.delete);

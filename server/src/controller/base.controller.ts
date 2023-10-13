@@ -146,12 +146,11 @@ export abstract class Controller {
     sellBook = async (req, res) => {
         try {
 
-            const { bookId, userId } = req.body;
+            const { bookId } = req.body;
 
             const user = await this.repository.findOneBy({ id: req.auth.id });
-            const book = await this.repository.findOneBy({ id: req.auth.id });
+            const book = await this.repository.findOneBy({ id: bookId });
 
-        
             if (!user || !book) {
                 return res.status(404).json({ message: 'User or book not found' });
             }

@@ -14,7 +14,7 @@ export class AppComponent {
     public authService: AuthService,
     private toastrService: ToastrService) { }
 
-  title = 'library-client';
+  title = 'Library Shop';
   
   logout() {
     this.authService.removeToken();

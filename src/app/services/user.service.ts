@@ -38,5 +38,4 @@ export class UserService {
     return this.http.post<AccessTokenDTO>('/api/users/login', data);
   }
 
-
 }

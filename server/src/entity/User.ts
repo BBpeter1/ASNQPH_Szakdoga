@@ -29,7 +29,7 @@ export class User implements UserDTO {
     @OneToMany(() => User, user => user.soldBooks)
     soldBooks: Book[];
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Column({ select: false })
