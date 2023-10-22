@@ -8,7 +8,7 @@ export class User implements UserDTO {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({nullable: true, type: 'text'})
     name: string
 
     @Column()
@@ -17,7 +17,7 @@ export class User implements UserDTO {
     @Column()
     szisz: number;
 
-    @Column()
+    @Column({nullable: true, type: 'text'})
     address: string;
 
     @Column()

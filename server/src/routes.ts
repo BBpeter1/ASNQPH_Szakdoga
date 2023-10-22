@@ -24,7 +24,7 @@ export function getRoutes() {
     const userController = new UserController();
     router.get('/users',checkUser, userController.getAll);
     router.get('/users/:id',checkUser, userController.getOne);
-    router.post('/users',checkUser, userController.create);
+    router.post('/users', userController.create);
     router.put('/users', checkUser,checkUser, userController.update);
     router.delete('/users/:id',checkUser, checkUser, userController.delete);
     router.post('/users/login', userController.login);

@@ -1,7 +1,12 @@
-<h2>Eladott termékek</h2> 
-	<h3 align = "right">Összesen: </h3><h4 align = "right">{{soldBooksCount}}</h4>
+<div align = "right">
+	<input type="text" [(ngModel)]="PdfFileName" placeholder="Fájlnév">
+	<input type="button" value="Konvertálás PDF-be" (click)="convetToPDF()"/>
+</div>
 
-
+<div id="contentToConvert">
+	<h2>Eladott termékek</h2> 
+	<h3 align = "right">Összesen: </h3><h4 align = "right">{{soldBooksCount}} db</h4>
+	<h3 align = "right">Összesen: </h3><h4 align = "right">{{soldBooksSum}} ft</h4>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -12,6 +17,7 @@
             <th scope="col">Termék leírása</th>
             <th scope="col">Termék kategóriája</th>
             <th scope="col">Termék elkeltének dátuma</th>
+			<th scope="col">Termékek ára</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,12 +29,14 @@
             <td>{{ book.description }}</td>
             <td>{{book.category}}</td>
             <td>{{ book.soldDate }}</td>
+			<td>{{ book.price }} ft</td>
 		</tr>
 	</tbody>
 </table>
 
+
 <h2>Kölcsönzött termékek</h2>
-<h3 align = "right">Összesen: </h3><h4 align = "right">{{borrowedBooksCount}}</h4>
+<h3 align = "right">Összesen: </h3><h4 align = "right">{{borrowedBooksCount}} db</h4>
 
 <table class="table table-striped">
 	<thead>
@@ -54,3 +62,5 @@
 		</tr>
 	</tbody>
 </table>
+
+</div>

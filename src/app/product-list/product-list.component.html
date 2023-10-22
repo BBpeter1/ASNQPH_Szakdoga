@@ -47,7 +47,7 @@
             <td>{{ book.Author }}</td>
             <td>{{ book.description }}</td>
             <td>{{book.category}}</td>
-            <td>{{book.price}}</td>
+            <td>{{book.price}} ft</td>
             <td><button class="btn btn-sm btn-outline-primary"
                 (click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
             <td><button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book)">Törlés</button></td>
@@ -78,7 +78,7 @@
             <td>{{ book.Author }}</td>
             <td>{{ book.description }}</td>
             <td>{{ book.category }}</td>
-            <td>{{ book.price }}</td>
+            <td>{{ book.price }} ft</td>
             <td><button class="btn btn-sm btn-outline-primary" (click)="sellBook(userId, book.id)">Vásárol</button></td>
             <td><button class="btn btn-sm btn-outline-primary" (click)="borrowBook(userId, book.id)">Kölcsönöz</button></td>
 		</tr>
