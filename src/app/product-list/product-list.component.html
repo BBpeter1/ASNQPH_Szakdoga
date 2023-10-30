@@ -1,42 +1,55 @@
 <div class="row">
-    <input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search...">
+	<input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Keresés...">
 </div>
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
-			<label for="selectedAuthor" class="form-label">Termék szerzője</label>
-			<select name="selectedAuthor" id="selectedAuthor" class="form-select"
-				aria-label=".form-select-sm example" [(ngModel)]="selectedAuthor" (ngModelChange)="filterTable()">
+			<label for="selectedAuthor" class="form-label">Tételek szerzője</label>
+			<select name="selectedAuthor" id="selectedAuthor" class="form-select" aria-label=".form-select-sm example"
+				[(ngModel)]="selectedAuthor" (ngModelChange)="filterTable()">
 				<option value="">Összes</option>
-				<option *ngFor="let book of books" [ngValue]="{ Author: book.Author }">
-					{{ book.Author }}
+				<option *ngFor="let author of uniqueAuthors" [ngValue]="author">
+					{{ author }}
 				</option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<label for="fromDate" class="form-label">Kezdő dátum</label>
-			<input type="date" class="form-control" id="fromDate" name="fromDate" [(ngModel)]="selectedStartDate" (ngModelChange)="filterTable()">
+			<input type="date" class="form-control" id="fromDate" name="fromDate" [(ngModel)]="selectedStartDate"
+				(ngModelChange)="filterTable()">
 		</div>
 		<div class="col-md-3">
 			<label for="toDate" class="form-label">Vég dátum</label>
-			<input type="date" class="form-control" id="toDate" name="toDate" [(ngModel)]="selectedEndDate" (ngModelChange)="filterTable()">
+			<input type="date" class="form-control" id="toDate" name="toDate" [(ngModel)]="selectedEndDate"
+				(ngModelChange)="filterTable()">
+		</div>
+		<div class="col-md-3">
+			<label for="selectedCategory" class="form-label">Kategória</label>
+			<select name="selectedCategory" id="selectedCategory" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedCategory" (ngModelChange)="filterTable()">
+				<option value="">Összes</option>
+				<option *ngFor="let category of uniqueCategories" [ngValue]="category">
+					{{ category }}
+				</option>
+			</select>
 		</div>
 	</div>
 </div>
-<h2>Termékek listája</h2>
+<hr>
+<h2>Tételek listája</h2>
 <table class="table table-striped">
 	<thead>
 		<tr>
-            <th scope="col">ID</th>
+			<th scope="col">ID</th>
 			<th scope="col">Termék kelte</th>
 			<th scope="col">Termék címe</th>
-            <th scope="col">Termék létrehozója</th>
-            <th scope="col">Termék leírása</th>
-            <th scope="col">Termék kategóriája</th>
-            <th scope="col">Termék ára</th>
-            <th scope="col">Szerkesztés</th>
-            <th scope="col">Törlés</th>
+			<th scope="col">Termék létrehozója</th>
+			<th scope="col">Termék leírása</th>
+			<th scope="col">Termék kategóriája</th>
+			<th scope="col">Termék ára</th>
+			<th scope="col">Szerkesztés</th>
+			<th scope="col">Törlés</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -44,30 +57,83 @@
 			<th scope="row">{{ book.id | number }}</th>
 			<td>{{ book.date }}</td>
 			<td>{{ book.title }}</td>
-            <td>{{ book.Author }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{book.category}}</td>
-            <td>{{book.price}} ft</td>
-            <td><button class="btn btn-sm btn-outline-primary"
-                (click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
-            <td><button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book)">Törlés</button></td>
+			<td>{{ book.Author }}</td>
+			<td>{{ book.description }}</td>
+			<td>{{ book.category }}</td>
+			<td>{{ book.price }} ft</td>
+			<td><button class="btn btn-sm btn-outline-primary"
+					(click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
+			<td><button class="btn btn-sm btn-outline-danger" (click)="open(deleteConfirmationModal,book.id, 'delete')">Törlés</button>
+				<ng-template #deleteConfirmationModal let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-basic-title">Megerősítés</h4>
+					</div>
+					<div class="modal-body">
+						Biztosan törölni szeretnéd ezt a könyvet?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Mégse</button>
+						<button type="button" class="btn btn-danger" (click)="modal.close('confirm')">Megerősít</button>
+					</div>
+				</ng-template>
+			</td>
 		</tr>
 	</tbody>
 </table>
-
-<h2>Elérhető termékek listája</h2>
+<hr>
+<div class="row">
+	<input type="text" [(ngModel)]="searchTermFree" (input)="searchBooksFree()" placeholder="Keresés...">
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<label for="selectedAuthorFree" class="form-label">Tételek szerzője</label>
+			<select name="selectedAuthorFree" id="selectedAuthorFree" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedAuthorFree"
+				(ngModelChange)="filterTableFree()">
+				<option value="">Összes</option>
+				<option *ngFor="let author of uniqueAuthorsFree" [ngValue]="author">
+					{{ author }}
+				</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<label for="fromDate" class="form-label">Kezdő dátum</label>
+			<input type="date" class="form-control" id="fromDateFree" name="fromDateFree"
+				[(ngModel)]="selectedStartDateFree" (ngModelChange)="filterTableFree()">
+		</div>
+		<div class="col-md-3">
+			<label for="toDate" class="form-label">Vég dátum</label>
+			<input type="date" class="form-control" id="toDateFree" name="toDateFree" [(ngModel)]="selectedEndDateFree"
+				(ngModelChange)="filterTableFree()">
+		</div>
+		<div class="col-md-3">
+			<label for="selectedCategoryFree" class="form-label">Kategória</label>
+			<select name="selectedCategoryFree" id="selectedCategoryFree" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedCategoryFree"
+				(ngModelChange)="filterTableFree()">
+				<option value="">Összes</option>
+				<option *ngFor="let category of uniqueCategoriesFree" [ngValue]="category">
+					{{ category }}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>
+<hr>
+<h2>Elérhető tételek listája</h2>
 <table class="table table-striped">
 	<thead>
 		<tr>
-            <th scope="col">ID</th>
+			<th scope="col">ID</th>
 			<th scope="col">Termék kelte</th>
 			<th scope="col">Termék címe</th>
-            <th scope="col">Termék létrehozója</th>
-            <th scope="col">Termék leírása</th>
-            <th scope="col">Termék kategóriája</th>
-            <th scope="col">Termék ára</th>
-            <th scope="col">Vásárlás</th>
-            <th scope="col">Kölcsönzés</th>
+			<th scope="col">Termék létrehozója</th>
+			<th scope="col">Termék leírása</th>
+			<th scope="col">Termék kategóriája</th>
+			<th scope="col">Termék ára</th>
+			<th scope="col">Vásárlás</th>
+			<th scope="col">Kölcsönzés</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -75,27 +141,99 @@
 			<th scope="row">{{ book.id | number }}</th>
 			<td>{{ book.date }}</td>
 			<td>{{ book.title }}</td>
-            <td>{{ book.Author }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{ book.category }}</td>
-            <td>{{ book.price }} ft</td>
-            <td><button class="btn btn-sm btn-outline-primary" (click)="sellBook(userId, book.id)">Vásárol</button></td>
-            <td><button class="btn btn-sm btn-outline-primary" (click)="borrowBook(userId, book.id)">Kölcsönöz</button></td>
+			<td>{{ book.Author }}</td>
+			<td>{{ book.description }}</td>
+			<td>{{ book.category }}</td>
+			<td>{{ book.price }} ft</td>
+			<td>
+				<button class="btn btn-sm btn-outline-primary"
+					(click)="open(buyContent, book.id, 'buy')">Vásárlás</button>
+				<ng-template #buyContent let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-basic-title">Megerősítés</h4>
+					</div>
+					<div class="modal-body">
+						Biztosan meg szeretnéd vásárolni ezt a könyvet?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Mégse</button>
+						<button type="button" class="btn btn-primary"
+							(click)="modal.close('confirm')">Megerősít</button>
+					</div>
+				</ng-template>
+			</td>
+			<td>
+				<button class="btn btn-sm btn-outline-primary"
+					(click)="open(borrowContent, book.id, 'borrow')">Kölcsönöz</button>
+				<ng-template #borrowContent let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-basic-title">Megerősítés</h4>
+					</div>
+					<div class="modal-body">
+						Biztosan kölcsönözni szeretnéd ezt a könyvet?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Mégse</button>
+						<button type="button" class="btn btn-primary"
+							(click)="modal.close('confirm')">Megerősít</button>
+					</div>
+				</ng-template>
+			</td>
 		</tr>
 	</tbody>
 </table>
+<hr>
 
-<h2>Kikölcsönzött termékek listája</h2>
+<div class="row">
+	<input type="text" [(ngModel)]="searchTermBorrowed" (input)="searchBooksBorrowed()" placeholder="Keresés...">
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<label for="selectedAuthorBorrowed" class="form-label">Tételek szerzője</label>
+			<select name="selectedAuthorBorrowed" id="selectedAuthorBorrowed" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedAuthorBorrowed" (ngModelChange)="filterTableBorrowed()">
+				<option value="">Összes</option>
+				<option *ngFor="let author of uniqueAuthorsBorrowed" [ngValue]="author">
+					{{ author }}
+				</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<label for="fromDate" class="form-label">Kezdő dátum</label>
+			<input type="date" class="form-control" id="fromDateBorrowed" name="fromDateBorrowed"
+				[(ngModel)]="selectedStartDateBorrowed" (ngModelChange)="filterTableBorrowed()">
+		</div>
+		<div class="col-md-3">
+			<label for="toDate" class="form-label">Vég dátum</label>
+			<input type="date" class="form-control" id="toDateBorrowed" name="toDateBorrowed"
+				[(ngModel)]="selectedEndDateBorrowed" (ngModelChange)="filterTableBorrowed()">
+		</div>
+		<div class="col-md-3">
+			<label for="selectedCategoryBorrowed" class="form-label">Kategória</label>
+			<select name="selectedCategoryBorrowed" id="selectedCategoryBorrowed" class="form-select"
+				aria-label=".form-select-sm example" [(ngModel)]="selectedCategoryBorrowed"
+				(ngModelChange)="filterTableBorrowed()">
+				<option value="">Összes</option>
+				<option *ngFor="let category of uniqueCategoriesBorrowed" [ngValue]="category">
+					{{ category }}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>
+<hr>
+<h2>Kikölcsönzött tételek listája</h2>
 <table class="table table-striped">
 	<thead>
 		<tr>
-            <th scope="col">ID</th>
+			<th scope="col">ID</th>
 			<th scope="col">Termék kelte</th>
 			<th scope="col">Termék címe</th>
-            <th scope="col">Termék létrehozója</th>
-            <th scope="col">Termék leírása</th>
-            <th scope="col">Termék kategóriája</th>
-            <th scope="col">Visszahozás</th>
+			<th scope="col">Termék létrehozója</th>
+			<th scope="col">Termék leírása</th>
+			<th scope="col">Termék kategóriája</th>
+			<th scope="col">Visszahozás</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -103,10 +241,24 @@
 			<th scope="row">{{ book.id | number }}</th>
 			<td>{{ book.date }}</td>
 			<td>{{ book.title }}</td>
-            <td>{{ book.Author }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{ book.category }}</td>
-            <td><button class="btn btn-sm btn-outline-primary" (click)="returnBook(userId, book.id)">Visszahoz</button></td>
+			<td>{{ book.Author }}</td>
+			<td>{{ book.description }}</td>
+			<td>{{ book.category }}</td>
+			<td><button class="btn btn-sm btn-outline-primary" (click)="open(returnContent,book.id, 'return')">Visszahoz</button>
+				<ng-template #returnContent let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-basic-title">Megerősítés</h4>
+					</div>
+					<div class="modal-body">
+						Biztosan vissza szeretnéd hozni ezt a könyvet?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Mégse</button>
+						<button type="button" class="btn btn-primary"
+							(click)="modal.close('confirm')">Megerősít</button>
+					</div>
+				</ng-template>
+			</td>
 		</tr>
 	</tbody>
 </table>

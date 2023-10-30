@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BookService } from '../services/book.service';
 import { BookDTO, UserDTO } from 'models';
 import { formatDate } from '@angular/common';
@@ -19,38 +19,36 @@ export class BookFormComponent implements OnInit {
 
   bookForm = this.formBuilder.group({
     id: this.formBuilder.control(0),
-    title: this.formBuilder.control(''),
-    description: this.formBuilder.control(''),
-    Author: this.formBuilder.control(''),
+    title: ['', Validators.required],
+    description:['', Validators.required],
+    Author: ['', Validators.required],
     status: this.formBuilder.control('szabad'),
-    category: this.formBuilder.control(''),
-    price: this.formBuilder.control(0),
+    category: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0.01)]],
     date: this.formBuilder.control(new Date().toISOString().split('T')[0])
   });
-  
+
   toastrService: any;
 
   constructor(private formBuilder: FormBuilder,
     private bookService: BookService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private userService: UserService) { }
 
-    private userService: UserService) {}
 
-    
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
 
-    if(id)
-    {
+    if (id) {
       this.isNewProduct = false;
 
       this.bookService.getOne(id).subscribe({
-        next: (book) =>  this.bookForm.setValue(book),
-          error: (err) => { 
-            console.error(err);
-            this.toastrService.error('A könyv adatok betöltése sikertelen','Hiba');
-          }
+        next: (book) => this.bookForm.setValue(book),
+        error: (err) => {
+          console.error(err);
+          this.toastrService.error('A tétel adatok betöltése sikertelen', 'Hiba');
+        }
       });
     }
 
@@ -58,33 +56,30 @@ export class BookFormComponent implements OnInit {
       next: (users) => this.users = users,
       error: (err) => {
         console.error(err);
-        this.toastrService.error('A felhasználók betöltése sikertelen','Hiba');
+        this.toastrService.error('A felhasználók betöltése sikertelen', 'Hiba');
       }
     });
 
   }
 
-    saveProduct()
-    {
-      const book = this.bookForm.value as BookDTO;
+  saveProduct() {
+    const book = this.bookForm.value as BookDTO;
 
-      if (this.isNewProduct)
-      {
+    if (this.isNewProduct) {
       this.bookService.create(book).subscribe({
-        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Product created')},
-        error: (err) => {this.toastr.error('Gatya', 'Hiba')}
+        next: (book) => { this.toastr.success('Tétel létrehozva! , id:' + book.id, 'Product created') },
+        error: (err) => { this.toastr.error('Hiba', 'Hiba') }
       });
     }
-    else{
+    else {
       this.bookService.update(book).subscribe({
-        next: (book) => {this.toastr.success('Suiiii , id:' + book.id, 'Product updated')},
-        error: (err) => {this.toastr.error('Gatya', 'Hiba')}
-    });
-  }
+        next: (book) => { this.toastr.success('Tétel módosítva!, id:' + book.id, 'Product updated') },
+        error: (err) => { this.toastr.error('Hiba', 'Hiba') }
+      });
+    }
   }
 
-  compareObjects(obj1: any, obj2: any)
-  {
+  compareObjects(obj1: any, obj2: any) {
     return obj1 && obj2 && obj1.id == obj2.id;
   }
 

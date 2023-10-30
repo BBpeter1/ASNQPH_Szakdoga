@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -22,6 +23,12 @@ export class StatisticsComponent implements OnInit {
   soldBooksSum: number = 0;
   borrowedBooksCount: number = 0;
   PdfFileName: string='';
+  XlsFileName: string='';
+  JsonFileName: string='';
+  selectedStartDate: string = '';
+  selectedEndDate: string = '';
+  @ViewChild('contentToConvert', { static: false }) contentToConvert!: ElementRef;
+
 
   constructor(private bookService: BookService,
     private toastr: ToastrService,
@@ -57,8 +64,38 @@ export class StatisticsComponent implements OnInit {
           pdf.save(`${this.PdfFileName}.pdf`);
       });
     } else {
-      console.log("Az elem nem található az oldalon.");
+      this.toastr.error('Az elem nem található az oldalon!');
     }
+  }
+
+  exportToXLSX() {
+    var data = document.getElementById('contentToConvert');
+    if(data)
+    {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Statisztika');
+    XLSX.writeFile(wb, `${this.XlsFileName}.xlsx`);
+
+  } else {
+    this.toastr.error('Az elem nem található az oldalon!');
+  }
+    
+  }
+
+  exportToJSON() {
+    const jsonData = JSON.stringify(this.books);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.JsonFileName}.json`;
+    document.body.appendChild(a);
+  
+    a.click();
+  
+    window.URL.revokeObjectURL(url);
   }
 
   loadSoldBooks() {
@@ -69,7 +106,7 @@ export class StatisticsComponent implements OnInit {
         this.soldBooksSum = this.soldBooks.reduce((total, book) => total + book.price, 0);
       },
       (error) => {
-        console.log('Error retrieving sold books:', error);
+        this.toastr.error('Hiba a betöltéskor!',error);
       }
     );
   }
@@ -81,9 +118,37 @@ export class StatisticsComponent implements OnInit {
         this.borrowedBooksCount = this.borrowedBooks.length;
       },
       (error) => {
-        console.log('Error retrieving borrowed books:', error);
+        this.toastr.error('Hiba a betöltéskor!',error);
       }
     );
+  }
+
+  filterTable() {
+    this.borrowedBooks = this.books.filter((book) => {
+      const startDate = this.selectedStartDate ? new Date(this.selectedStartDate) : null;
+      const endDate = this.selectedEndDate ? new Date(this.selectedEndDate) : null;
+      const itemDate = new Date(book.borrowDate);
+      const itemDate2 = new Date(book.soldDate);
+      const isDateInRange = (!startDate || itemDate >= startDate) && (!startDate || itemDate2 >= startDate) && (!endDate || itemDate2 <= endDate) &&
+        (!endDate || itemDate <= endDate);
+
+      return isDateInRange;
+    });
+
+    this.soldBooks = this.books.filter((book) => {
+      const startDate = this.selectedStartDate ? new Date(this.selectedStartDate) : null;
+      const endDate = this.selectedEndDate ? new Date(this.selectedEndDate) : null;
+      const itemDate = new Date(book.borrowDate);
+      const itemDate2 = new Date(book.soldDate);
+      const isDateInRange = (!startDate || itemDate >= startDate) && (!startDate || itemDate2 >= startDate) && (!endDate || itemDate2 <= endDate) &&
+        (!endDate || itemDate <= endDate);
+
+      return isDateInRange;
+    });
+
+    if ( !this.selectedStartDate && !this.selectedEndDate) {
+      this.borrowedBooks, this.soldBooks = this.books;
+    }
   }
 
 }

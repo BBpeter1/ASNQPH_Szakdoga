@@ -19,13 +19,27 @@
 		<tr *ngFor="let user of filteredUsers">
 			<th scope="row">{{ user.id | number }}</th>
 			<td>{{ user.name }}</td>
-			<td>{{ user.isActive }}</td>
+			<td>{{ user.isActive ? 'igen' : 'nem' }}</td>
             <td>{{ user.address }}</td>
             <td>{{ user.phone }}</td>
             <td>{{user.szisz}}</td>
             <td *ngIf="authService.isLoggedIn()"><button class="btn btn-sm btn-outline-primary"
                 (click)="navigateToUserForm(user.id)">Szerkesztés</button></td>
-            <td *ngIf="authService.isLoggedIn()"><button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user)">Törlés</button></td>
+            <td *ngIf="authService.isLoggedIn()"><button class="btn btn-sm btn-outline-danger" (click)="open(deleteContent, user.id, 'delete')">Törlés</button>
+                <ng-template #deleteContent let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-basic-title">Megerősítés</h4>
+					</div>
+					<div class="modal-body">
+						Biztosan ki szeretnéd törölni ezt a felhasználót?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Mégse</button>
+						<button type="button" class="btn btn-primary"
+							(click)="modal.close('confirm')">Megerősít</button>
+					</div>
+				</ng-template>
+            </td>
 		</tr>
 	</tbody>
 </table>

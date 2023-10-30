@@ -16,8 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { AccessTokenInterceptor } from './services/access-token.interceptor';
 import { UnauthorizedInterceptor } from './services/unauthorized.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
-import { PdfmakerComponent } from './pdfmaker/pdfmaker.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +29,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
     OverdueBooksComponent,
     LoginComponent,
     RegistrationComponent,
-    PdfmakerComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ThemeToggleComponent
   ],
   imports: [
     BrowserModule,

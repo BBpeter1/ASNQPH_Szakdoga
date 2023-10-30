@@ -7,10 +7,6 @@ import { AccessTokenDTO, BookDTO, LoginDTO, UserDTO } from 'models';
 export class UserService {
   private users: UserDTO[] = [];
 
-  deleteUser(id: number) {
-    throw new Error('Method not implemented.');
-  }
-
   constructor(private http: HttpClient) {
   }
 
@@ -30,8 +26,8 @@ export class UserService {
     return this.http.put<UserDTO>('/api/users/', user);
   }
 
-  delete(user: UserDTO) {
-    return this.http.put<UserDTO>('/api/users/', user);
+  deactivate(user: UserDTO) {
+    return this.http.post<UserDTO>(`/api/users/${user.id}`, user);
   }
 
   login(data: LoginDTO) {

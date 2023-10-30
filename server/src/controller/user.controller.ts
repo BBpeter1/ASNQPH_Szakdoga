@@ -1,7 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entity/User";
 import { Controller } from "./base.controller";
-
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -47,4 +46,24 @@ export class UserController extends Controller {
             this.handleError(res, err);
         }
     };
+
+    deactivate = async (req, res) => {
+        try {
+            const userToDeactivate = await this.repository.findOneBy({
+                id: req.params.id
+            });
+    
+            if (!userToDeactivate) {
+                return this.handleError(res, null, 404, 'Felhasználó nem található.');
+            }
+    
+            userToDeactivate.isActive = true;
+            await this.repository.save(userToDeactivate);
+    
+            res.status(200).send('Felhasználó inaktívvá vált.');
+        } catch (err) {
+            this.handleError(res, err);
+        }
+    };
+    
 }

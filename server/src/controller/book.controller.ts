@@ -54,6 +54,7 @@ export class BookController extends Controller {
                 return res.status(400).json({ message: 'User has reached the maximum limit of borrowed books' });
             }
 
+            book.borrower = user;
             book.status = 'kölcsönzött';
             book.borrowDate = new Date().toISOString();
 
@@ -84,6 +85,7 @@ export class BookController extends Controller {
 
             user.soldBooks = await AppDataSource.getRepository(Book).findBy({ sold: { id: req.auth.id } })
 
+            book.sold = user;
             book.status = 'eladott';
             book.soldDate = new Date().toISOString();
 
@@ -111,6 +113,7 @@ export class BookController extends Controller {
             }
             user.borrowedBooks = user.borrowedBooks.filter(borrowedBook => borrowedBook.id !== book.id);
 
+            book.borrower = null;
             book.status = 'szabad';
             book.borrowDate = null;
 
@@ -119,6 +122,7 @@ export class BookController extends Controller {
 
             res.json({ message: 'Book returned successfully' });
         } catch (error) {
+            console.error(error);
             res.status(500).json({ message: 'Error returning book' });
         }
     };

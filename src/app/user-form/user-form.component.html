@@ -9,25 +9,37 @@
         <form [formGroup]="userForm">
             <div class="mb-3">
                 <label for="name" class="form-label">Név</label>
-                <input type="text" class="form-control" id="name" name="name" formControlName = "name">
-            </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">Telefonszám</label>
-                <div class="input-group">
-                    <input type="number" step="0.5" class="form-control text-end pe-1" id="phone" name="phone" formControlName="phone">
-                    <span class="input-group-text"></span>
+                <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{'has-error': userForm.get('name')?.invalid}">
+                <div *ngIf="userForm.get('name')?.hasError('required')" class="error">
+                    <span class="error-text">Név megadása kötelező!</span>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="szisz" class="form-label">Személyi igazolvány szám</label>
-                <div class="input-group">
-                    <input type="number" step="0.5" class="form-control text-end pe-1" id="szisz" name="szisz" formControlName="szisz">
-                    <span class="input-group-text"></span>
+                <label for="phone" class="form-label">Telefonszám (Pl: +36 20 133 3422, 06 30 122 3214)</label>
+                <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" [ngClass]="{'has-error': userForm.get('phone')?.invalid}">
+                <div *ngIf="userForm.get('phone')?.hasError('required')" class="error">
+                    <span class="error-text">Telefonszám megadása kötelező!</span>
+                </div>
+                <div *ngIf="userForm.get('phone')?.hasError('pattern')" class="error">
+                    <span class="error-text">Nem megfelelő telefonszám formátum! (Pl: +36 20 133 3422)</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="szisz" class="form-label">Személyi igazolvány szám (Pl: 345624TA)</label>
+                <input type="text" class="form-control" id="szisz" name="szisz" formControlName="szisz" [ngClass]="{'has-error': userForm.get('szisz')?.invalid}">
+                <div *ngIf="userForm.get('szisz')?.hasError('required')" class="error">
+                    <span class="error-text">Személyi igazolvány megadása kötelező!</span>
+                </div>
+                <div *ngIf="userForm.get('szisz')?.hasError('pattern')" class="error">
+                    <span class="error-text">Nem megfelelő személyi igazolvány formátum!(Pl: 345624TA)</span>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Lakcím</label>
-                <input type="text" class="form-control" id="address" name="address" formControlName = "address" rows = "2">
+                <input type="text" class="form-control" id="address" name="address" formControlName="address" rows="2" [ngClass]="{'has-error': userForm.get('address')?.invalid}">
+                <div *ngIf="userForm.get('address')?.hasError('required')" class="error">
+                    <span class="error-text">Lakcím megadása kötelező!</span>
+                </div>
             </div>
             <div class="text-end">
                 <button class="btn btn-outline-primary" (click) ="saveUser()">Mentés</button>

@@ -1,10 +1,11 @@
 import express from 'express';
 import { BookController } from './controller/book.controller';
 import { UserController } from './controller/user.controller';
-import { CategoryController } from './controller/category.controller';
+import { AuthorController} from './controller/author.controller';
 import { checkUser } from './protect-routes';
 
 export function getRoutes() {
+    
     const router = express.Router();
 
     const bookController = new BookController();
@@ -25,16 +26,16 @@ export function getRoutes() {
     router.get('/users',checkUser, userController.getAll);
     router.get('/users/:id',checkUser, userController.getOne);
     router.post('/users', userController.create);
-    router.put('/users', checkUser,checkUser, userController.update);
-    router.delete('/users/:id',checkUser, checkUser, userController.delete);
+    router.put('/users', checkUser,userController.update);
+    router.post('/users/:id',checkUser, userController.deactivate);
     router.post('/users/login', userController.login);
 
-    const categoryController = new CategoryController();
-    router.get('/categories', checkUser,categoryController.getAll);
-    router.get('/categories/:id',checkUser, categoryController.getOne);
-    router.post('/categories', checkUser, categoryController.create);
-    router.put('/categories', checkUser, categoryController.update);
-    router.delete('/categories/:id', checkUser, categoryController.delete);
+    const authorController = new AuthorController();
+    router.get('/authors', checkUser,authorController.getAll);
+    router.get('/authors/:id',checkUser, authorController.getOne);
+    router.post('/authors', checkUser, authorController.create);
+    router.put('/authors', checkUser, authorController.update);
+    router.delete('/authors/:id', checkUser, authorController.delete);
 
     return router;
 }

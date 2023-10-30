@@ -11,11 +11,11 @@ export class User implements UserDTO {
     @Column({nullable: true, type: 'text'})
     name: string
 
-    @Column()
-    phone: number
+    @Column({nullable: true, type: 'text'})
+    phone: string
 
-    @Column()
-    szisz: number;
+    @Column({nullable: true,type: 'text'})
+    szisz: string;
 
     @Column({nullable: true, type: 'text'})
     address: string;

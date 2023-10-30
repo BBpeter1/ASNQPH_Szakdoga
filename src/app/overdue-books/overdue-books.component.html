@@ -1,3 +1,7 @@
+<div class="row">
+	<input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Keresés...">
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -6,6 +10,7 @@
       <th scope="col">Kölcsönző neve</th>
       <th scope="col">Kikölcsönzés napja</th>
       <th scope="col">Számított késés</th>
+      <th scope="col">Értesítés</th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +19,8 @@
       <td>{{book.title}}</td>
       <td>{{ book.borrower.name }}</td>
       <td>{{ book.borrowDate }}</td>
-      <td>{{ book.delay }} days</td>
+      <td>{{ book.delay }} nap</td>
+      <td><button class="btn btn-sm btn-outline-danger" (click)="sendEmail()">Email küldése</button></td>
     </tr>
   </tbody>
 </table>

@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     public authService: AuthService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,) { }
 
   title = 'Library Shop';
   

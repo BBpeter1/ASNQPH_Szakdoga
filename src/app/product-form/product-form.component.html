@@ -1,6 +1,6 @@
 <div class="row justify-content-md-center">
     <div class="col-md-6">
-        <h4>Termék adatok</h4>
+        <h4>Tétel adatok</h4>
         <hr>
     </div>
 </div>
@@ -9,15 +9,24 @@
         <form [formGroup]="bookForm">
             <div class="mb-3">
                 <label for="title" class="form-label">Cím</label>
-                <input type="text" class="form-control" id="title" name="title" formControlName = "title">
+                <input type="text" class="form-control" id="title" name="title" formControlName = "title" [ngClass]="{'has-error': bookForm.get('title')?.invalid}">
+                <div *ngIf="bookForm.get('title')?.hasError('required')" class="error">
+                    <span class="error-text">Cím megadása kötelező!</span>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="Author" class="form-label">Szerző</label>
-                <input type="text" class="form-control" id="Author" name="Author" formControlName = "Author">
+                <input type="text" class="form-control" id="Author" name="Author" formControlName = "Author" [ngClass]="{'has-error': bookForm.get('Author')?.invalid}">
+                <div *ngIf="bookForm.get('Author')?.hasError('required')" class="error">
+                    <span class="error-text">Szerző megadása kötelező!</span>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Leírás</label>
-                <textarea class="form-control" name="description" id="description" rows="3" formControlName = "description"></textarea>
+                <textarea class="form-control" name="description" id="description" rows="3" formControlName = "description" [ngClass]="{'has-error': bookForm.get('description')?.invalid}"></textarea>
+                <div *ngIf="bookForm.get('description')?.hasError('required')" class="error">
+                    <span class="error-text">Leírás megadása kötelező!</span>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Kiadás éve</label>
@@ -26,17 +35,22 @@
             <div class="mb-3">
                 <label for="price" class="form-label">Ár</label>
                 <div class="input-group">
-                    <input type="number" step="1" class="form-control text-end pe-1" id="price" name="price" formControlName="price">
-                    <span class="input-group-text"></span>
+                    <input type="number" step="1" class="form-control text-end pe-1" id="price" name="price" formControlName="price" [ngClass]="{'has-error': bookForm.get('price')?.invalid}">
+                    <div *ngIf="bookForm.get('price')?.hasError('required')" class="error">
+                        <span class="error-text">Ár megadása kötelező!</span>
+                    </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="category" class="form-label">Kategória [cd,könyv,kazetta]</label>
-                <select name="category" class="form-select" formControlName = "category">
+                <select name="category" class="form-select" formControlName = "category" [ngClass]="{'has-error': bookForm.get('category')?.invalid}">
                     <option value = "cd">CD</option>
                     <option value = "kazetta">Kazetta</option>
                     <option value = "könyv">Könyv</option>
                 </select>
+                <div *ngIf="bookForm.get('category')?.hasError('required')" class="error">
+                    <span class="error-text">Kategória megadása kötelező!</span>
+                </div>
             </div>
             <div class="text-end">
                 <button class="btn btn-outline-primary" (click) ="saveProduct()">Mentés</button>

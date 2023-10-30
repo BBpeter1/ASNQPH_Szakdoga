@@ -1,32 +1,34 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Könyvtári Nyilvántartó Rendszer</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">Library Shop Alkalmazás</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"*ngIf="authService.isLoggedIn()" routerLink="/product-list">Termékek</a>
+          <a class="nav-link" aria-current="page" href="#" *ngIf="authService.isLoggedIn()" routerLink="/product-list">Tételek</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/product-form">Új termék</a>
+          <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/product-form">Új tétel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"*ngIf="authService.isLoggedIn()" routerLink="/user-list">Felhasználók</a>
+          <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/user-list">Felhasználók</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/user-form">Új felhasználó</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/overdue-books">Késésben lévő könyvek</a>
+          <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/overdue-books">Késésben lévő
+            tételek</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" *ngIf="authService.isLoggedIn()" routerLink="/statistics">Statisztikák</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" (click)="logout()">Kilépés</a>
-      </li>
+        </li>
       </ul>
     </div>
   </div>

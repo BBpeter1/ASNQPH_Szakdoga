@@ -1,8 +1,8 @@
 export interface UserDTO {
     id: number;
     name: string;
-    phone: number;
-    szisz: number;
+    phone: string;
+    szisz: string;
     address: string;
     isActive: boolean;
     email: string;
@@ -20,9 +20,11 @@ export interface AccessTokenDTO {
     accessToken: string;
 }
 
-export interface StatusDTO {
+export interface AuthorDTO
+{
     id: number;
-    title: string;
+    name: string;
+    biography: string;
 }
 
 export interface BookDTO {
@@ -36,5 +38,5 @@ export interface BookDTO {
     soldDate: string;
     category: string;
     status: string;
-    delay: number;
+    delay:number;
 }
