@@ -27,8 +27,8 @@ export function getRoutes() {
     router.get('/users/:id',checkUser, userController.getOne);
     router.post('/users', userController.create);
     router.put('/users', checkUser,userController.update);
-    router.post('/users/:id',checkUser, userController.deactivate);
     router.post('/users/login', userController.login);
+    router.post('/users/:id',checkUser, userController.deactivate);
 
     const authorController = new AuthorController();
     router.get('/authors', checkUser,authorController.getAll);
