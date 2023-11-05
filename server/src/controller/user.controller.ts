@@ -27,7 +27,7 @@ export class UserController extends Controller {
         try {
             const user = await this.repository.findOne({
                 where: { email: req.body.email },
-                select: [ 'id', 'password' ]
+                select: [ 'id', 'password', 'isAdmin' ]
             });
     
             if (!user) {
@@ -39,9 +39,8 @@ export class UserController extends Controller {
                 return this.handleError(res, null, 401, 'Incorrect email or password.');
             }
     
-            const token = jwt.sign({ id: user.id }, 'mySecretKey', { expiresIn: '2w' });
-            res.json({ accessToken: token });
-    
+            const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, 'mySecretKey', { expiresIn: '2w' });
+            res.json({ accessToken: token, isAdmin: user.isAdmin });
         } catch (err) {
             this.handleError(res, err);
         }

@@ -1,0 +1,29 @@
+<div class="row" *ngIf="authService.isLoggedIn()">
+	<input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Keresés...">
+</div>
+<hr *ngIf="authService.isLoggedIn()" class="space-divider">
+<h2 *ngIf="authService.isLoggedIn()">Tételeim listája</h2>
+<table class="table table-striped" *ngIf="authService.isLoggedIn()">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Termék kelte</th>
+			<th scope="col">Termék címe</th>
+			<th scope="col">Termék létrehozója</th>
+			<th scope="col">Termék leírása</th>
+			<th scope="col">Termék kategóriája</th>
+			<th scope="col">Termék ára</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let book of userBooks">
+			<th scope="row">{{ book.id | number }}</th>
+			<td>{{ book.date }}</td>
+			<td>{{ book.title }}</td>
+			<td>{{ book.Author }}</td>
+			<td>{{ book.description }}</td>
+			<td>{{ book.category }}</td>
+			<td>{{ book.price }} ft</td>
+		</tr>
+	</tbody>
+</table>

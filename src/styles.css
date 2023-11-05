@@ -188,3 +188,15 @@
       width: 25em;
     }
   }
+
+.dark-mode
+{
+  background-color: black;
+  color:white
+}
+
+body.dark-mode
+{
+  background-color: #222;
+  color:white
+}

@@ -17,6 +17,24 @@ export class BookController extends Controller {
         }
     };
 
+    getUserBooks = async (req, res) => {
+        try {
+            const user = await this.userRepository.findOneBy({ id: req.auth.id });
+
+            const books = await this.repository
+                .createQueryBuilder('book')
+                .where('book.status = :status1 OR book.status = :status2', { status1: 'eladott', status2: 'kölcsönzött' })
+                .andWhere('book.borrower = :userId', { userId: user })
+                .andWhere('book.sold = :userId', { userId: user })
+                .getMany();
+
+            res.json(books);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'Error retrieving user books' })
+        }
+    };
+
     getSoldBooks = async (req, res) => {
         try {
             const books = await this.repository.find({ where: { status: 'eladott' } });
@@ -43,7 +61,7 @@ export class BookController extends Controller {
             const user = await this.userRepository.findOneBy({ id: req.auth.id });
             const book = await this.repository.findOneBy({ id: bookId });
 
-        
+
             if (!user || !book) {
                 return res.status(404).json({ message: 'User or book not found' });
             }
@@ -105,8 +123,8 @@ export class BookController extends Controller {
         try {
             const { bookId } = req.body;
 
-            const user = await this.userRepository.findOneBy({id: req.auth.id} );
-            const book = await this.repository.findOneBy({id: bookId});
+            const user = await this.userRepository.findOneBy({ id: req.auth.id });
+            const book = await this.repository.findOneBy({ id: bookId });
 
             if (!user || !book) {
                 return res.status(404).json({ message: 'User or book not found' });

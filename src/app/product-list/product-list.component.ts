@@ -183,7 +183,8 @@ export class BookListComponent implements OnInit {
   borrowBook(userId: number, bookId: number) {
     this.bookService.borrowBook(userId, bookId).subscribe(
       () => {
-        this.toastr.success('Sikeresen kikölcsönözted a könyvet!'),
+        this.toastr.success('Sikeresen kikölcsönözted a tételt!'),
+          this.loadBorrowedBooks();
           this.loadAvailableBooks();
       },
       (error) => {
@@ -196,7 +197,7 @@ export class BookListComponent implements OnInit {
   sellBook(userId: number, bookId: number) {
     this.bookService.sellBook(userId, bookId).subscribe(
       () => {
-        this.toastr.success('Sikeresen megvetted a könyvet!'),
+        this.toastr.success('Sikeresen megvetted a tételt!'),
           this.loadAvailableBooks();
       },
       (error) => {
@@ -208,10 +209,12 @@ export class BookListComponent implements OnInit {
   returnBook(userId: number, bookId: number) {
     this.bookService.returnBook(userId, bookId).subscribe(
       () => {
-        this.toastr.success('Sikeresen visszaszolgáltattad a könyvet!'),
+        this.toastr.success('Sikeresen visszaszolgáltattad a tételt!'),
           this.loadAvailableBooks();
+          this.loadBorrowedBooks();
       },
       (error) => {
+       console.log(error);
         this.toastr.error('Hiba a visszahozáskor!', error);
       }
     );
@@ -351,7 +354,5 @@ export class BookListComponent implements OnInit {
       }
     );
   }
-
-
 
 }

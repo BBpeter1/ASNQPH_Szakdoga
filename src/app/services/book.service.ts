@@ -37,6 +37,10 @@ export class BookService {
     return this.http.get<BookDTO[]>('/api/books/available');
   }
 
+  getUserBooks(): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>('/api/books/userbooks');
+  }
+
   getSoldBooks(): Observable<BookDTO[]> {
     return this.http.get<BookDTO[]>('/api/books/sold');
   }

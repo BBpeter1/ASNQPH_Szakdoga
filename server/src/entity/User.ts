@@ -23,6 +23,9 @@ export class User implements UserDTO {
     @Column()
     isActive:boolean;
 
+    @Column()
+    isAdmin: boolean;
+
     @OneToMany(() => User, user => user.borrowedBooks)
     borrowedBooks: Book[];
 

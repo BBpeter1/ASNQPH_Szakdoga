@@ -41,6 +41,13 @@
                     <span class="error-text">Lakcím megadása kötelező!</span>
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="isAdmin" class="form-label">Admin jogosultság:</label>
+                <select class="form-select" id="isAdmin" name="isAdmin" formControlName="isAdmin">
+                    <option value="true">Igen</option>
+                    <option value="false">Nem</option>
+                </select>
+            </div>                
             <div class="text-end">
                 <button class="btn btn-outline-primary" (click) ="saveUser()">Mentés</button>
             </div>

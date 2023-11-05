@@ -8,6 +8,7 @@
             <th scope="col">ID</th>
 			<th scope="col">Felhasználó neve</th>
 			<th scope="col">Inaktivált felhasználó?</th>
+			<th scope="col">Admin felhasználó?</th>
             <th scope="col">Felhasználó címe</th>
             <th scope="col">Felhasználó telefonszáma</th>
             <th scope="col">Felhasználó személyigazolvány száma</th>
@@ -20,6 +21,7 @@
 			<th scope="row">{{ user.id | number }}</th>
 			<td>{{ user.name }}</td>
 			<td>{{ user.isActive ? 'igen' : 'nem' }}</td>
+			<td>{{ user.isAdmin ? 'igen' : 'nem' }}</td>
             <td>{{ user.address }}</td>
             <td>{{ user.phone }}</td>
             <td>{{user.szisz}}</td>

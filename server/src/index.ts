@@ -1,7 +1,7 @@
 import { AppDataSource } from "./data-source"
 import express from "express";
 import { getRoutes } from "./routes";
-import { handleAuthorizationError } from "./protect-routes";
+import { handleAuthorizationError, handleRoleMismatchError } from "./protect-routes";
 
 AppDataSource.initialize().then(async () => {
 
@@ -9,7 +9,7 @@ AppDataSource.initialize().then(async () => {
 
     app.use(express.json());
 
-    app.use('/api', getRoutes(), handleAuthorizationError);
+    app.use('/api', getRoutes(), handleAuthorizationError, handleRoleMismatchError);
 
     app.listen(3000, () => {
         console.log('Listening on port 3000 ...');

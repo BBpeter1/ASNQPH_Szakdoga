@@ -30,6 +30,7 @@ export class LoginComponent {
     this.userService.login(loginData).subscribe({
       next: (response) => {
         this.authService.setToken(response.accessToken);
+        this.authService.setIsAdmin(response.isAdmin);
         this.toastrService.success('Üdvözöljük a weboldalon!', 'Sikeres bejelentkezés', {
         timeOut: 3000});
         this.router.navigateByUrl('/product-list');

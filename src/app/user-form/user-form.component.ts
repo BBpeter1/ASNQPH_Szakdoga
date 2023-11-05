@@ -19,6 +19,9 @@ export class UserFormComponent implements OnInit {
     id: this.formBuilder.control(0),
     address: ['', [Validators.required]],
     name: ['', [Validators.required]],
+    isAdmin: [false, Validators.required],
+    isActive: [false, Validators.required],
+    email: ['', [Validators.required]],
     phone: ['', [Validators.required, Validators.pattern(/^(?:\+?36|0)[\d-]{8,12}$/)]],
     szisz: ['', [Validators.required, Validators.pattern(/^\d{6}[A-Za-z]{2}$/)]],
   });
@@ -60,7 +63,6 @@ export class UserFormComponent implements OnInit {
       this.toastrService.error('Hibás adatokat adott meg. Kérjük, ellenőrizze az űrlapot és próbálja újra!', 'Hiba');
       return;
     }
-  
     const user = this.userForm.value as UserDTO;
   
     if (this.isNewUser) {

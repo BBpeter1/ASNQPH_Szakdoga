@@ -10,24 +10,27 @@
         <form [formGroup]="registrationForm">
             <div class="mb-3">
                 <label for="name" class="form-label">Név</label>
-                <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="{'has-error': registrationForm.get('name')?.invalid}">
+                <input type="text" class="form-control" id="name" name="name" formControlName="name"
+                    [ngClass]="{'has-error': registrationForm.get('name')?.invalid}">
                 <div *ngIf="registrationForm.get('name')?.hasError('required')" class="error">
                     <span class="error-text">Név megadása kötelező!</span>
                 </div>
-            </div>            
+            </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Telefonszám (Pl: +36 20 133 3422, 06 30 122 3214)</label>
-                <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" [ngClass]="{'has-error': registrationForm.get('phone')?.invalid}">
+                <input type="text" class="form-control" id="phone" name="phone" formControlName="phone"
+                    [ngClass]="{'has-error': registrationForm.get('phone')?.invalid}">
                 <div *ngIf="registrationForm.get('phone')?.hasError('required')" class="error">
                     <span class="error-text">Telefonszám megadása kötelező!</span>
                 </div>
                 <div *ngIf="registrationForm.get('phone')?.hasError('pattern')" class="error">
                     <span class="error-text">Nem megfelelő telefonszám formátum! (Pl: +36 20 133 3422)</span>
                 </div>
-            </div>            
+            </div>
             <div class="mb-3">
                 <label for="szisz" class="form-label">Személyi igazolvány szám (Pl: 345624TA)</label>
-                <input type="text" class="form-control" id="szisz" name="szisz" formControlName="szisz" [ngClass]="{'has-error': registrationForm.get('szisz')?.invalid}">
+                <input type="text" class="form-control" id="szisz" name="szisz" formControlName="szisz"
+                    [ngClass]="{'has-error': registrationForm.get('szisz')?.invalid}">
                 <div *ngIf="registrationForm.get('szisz')?.hasError('required')" class="error">
                     <span class="error-text">Személyi igazolvány megadása kötelező!</span>
                 </div>
@@ -37,7 +40,8 @@
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Lakcím</label>
-                <input type="text" class="form-control" id="address" name="address" formControlName="address" rows="2" [ngClass]="{'has-error': registrationForm.get('address')?.invalid}">
+                <input type="text" class="form-control" id="address" name="address" formControlName="address" rows="2"
+                    [ngClass]="{'has-error': registrationForm.get('address')?.invalid}">
                 <div *ngIf="registrationForm.get('address')?.hasError('required')" class="error">
                     <span class="error-text">Lakcím megadása kötelező!</span>
                 </div>
@@ -45,7 +49,8 @@
             <form [formGroup]="registrationForm">
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail cím (Pl: valaki@gmail.com)</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" required [ngClass]="{'has-error': registrationForm.get('email')?.invalid}">
+                    <input type="email" class="form-control" id="email" formControlName="email" required
+                        [ngClass]="{'has-error': registrationForm.get('email')?.invalid}">
                     <div *ngIf="registrationForm.get('email')?.hasError('required')" class="error">
                         <span class="error-text">Email megadása kötelező!</span>
                     </div>
@@ -54,19 +59,25 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Jelszó (Legalább 6 karakter, és 1 nagybetű megadása kötelező!)</label>
-                    <input type="password" class="form-control" id="password" formControlName="password" required [ngClass]="{'has-error': registrationForm.get('password')?.invalid}">
+                    <label for="password" class="form-label">Jelszó (Legalább 6 karakter, és 1 nagybetű megadása
+                        kötelező!)</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" required
+                        [ngClass]="{'has-error': registrationForm.get('password')?.invalid}">
                     <div *ngIf="registrationForm.get('password')?.hasError('required')" class="error">
                         <span class="error-text">Jelszó megadása kötelező!</span>
                     </div>
                     <div *ngIf="registrationForm.get('password')?.hasError('pattern')" class="error">
                         <span class="error-text">Nem megfelelő jelszó formátum!</span>
                     </div>
-                </div>            
+                </div>
                 <div class="text-center">
                     <button class="btn btn-outline-primary" (click)="registration()">Regisztráció</button>
                 </div>
-        </form>
+                <hr class = "space-divider">
+                <div class="text-center">
+                    <button class="btn btn-outline-primary" (click)="redirectToLogin()">Bejelentkezés</button>
+                </div>
+            </form>
         </form>
     </div>
 </div>

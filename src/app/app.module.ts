@@ -18,6 +18,7 @@ import { UnauthorizedInterceptor } from './services/unauthorized.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
+import { UserProductComponent } from './user-product/user-product.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
     LoginComponent,
     RegistrationComponent,
     StatisticsComponent,
-    ThemeToggleComponent
+    ThemeToggleComponent,
+    UserProductComponent
   ],
   imports: [
     BrowserModule,

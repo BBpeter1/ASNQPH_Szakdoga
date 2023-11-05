@@ -1,14 +1,4 @@
-.dark-mode
-{
-  background-color: black;
-  color:white
-}
 
-body.dark-mode
-{
-  background-color: #222;
-  color:white
-}
 
 .switch {
     position: relative;

@@ -5,6 +5,7 @@ export interface UserDTO {
     szisz: string;
     address: string;
     isActive: boolean;
+    isAdmin: boolean;
     email: string;
     password: string;
     borrowedBooks: BookDTO[];
@@ -18,6 +19,7 @@ export interface LoginDTO {
 
 export interface AccessTokenDTO {
     accessToken: string;
+    isAdmin: boolean;
 }
 
 export interface AuthorDTO

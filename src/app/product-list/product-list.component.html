@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row" *ngIf="authService.isLoggedIn() && authService.isAdmin() ">
 	<input type="text" [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Keresés...">
 </div>
-
-<div class="container">
-	<div class="row">
+<hr class="space-divider" *ngIf="authService.isLoggedIn() && authService.isAdmin() ">
+<div class="container" *ngIf="authService.isLoggedIn() && authService.isAdmin() ">
+	<div class="row" class="row gray-background">
 		<div class="col-md-3">
 			<label for="selectedAuthor" class="form-label">Tételek szerzője</label>
 			<select name="selectedAuthor" id="selectedAuthor" class="form-select" aria-label=".form-select-sm example"
@@ -36,9 +36,9 @@
 		</div>
 	</div>
 </div>
-<hr>
-<h2>Tételek listája</h2>
-<table class="table table-striped">
+<hr *ngIf="authService.isLoggedIn() && authService.isAdmin() " class="space-divider">
+<h2 *ngIf="authService.isLoggedIn() && authService.isAdmin() ">Tételek listája</h2>
+<table class="table table-striped" *ngIf="authService.isLoggedIn() && authService.isAdmin() ">
 	<thead>
 		<tr>
 			<th scope="col">ID</th>
@@ -48,6 +48,7 @@
 			<th scope="col">Termék leírása</th>
 			<th scope="col">Termék kategóriája</th>
 			<th scope="col">Termék ára</th>
+			<th scope="col">Termék státusza</th>
 			<th scope="col">Szerkesztés</th>
 			<th scope="col">Törlés</th>
 		</tr>
@@ -61,6 +62,7 @@
 			<td>{{ book.description }}</td>
 			<td>{{ book.category }}</td>
 			<td>{{ book.price }} ft</td>
+			<td>{{ book.status }}</td>
 			<td><button class="btn btn-sm btn-outline-primary"
 					(click)="navigateToProductForm(book.id)">Szerkesztés</button></td>
 			<td><button class="btn btn-sm btn-outline-danger" (click)="open(deleteConfirmationModal,book.id, 'delete')">Törlés</button>
@@ -80,12 +82,14 @@
 		</tr>
 	</tbody>
 </table>
-<hr>
+<hr *ngIf="authService.isLoggedIn() && authService.isAdmin() " class="space-divider">
+
 <div class="row">
 	<input type="text" [(ngModel)]="searchTermFree" (input)="searchBooksFree()" placeholder="Keresés...">
 </div>
+<hr class="space-divider">
 <div class="container">
-	<div class="row">
+	<div class="row" class="row gray-background">
 		<div class="col-md-3">
 			<label for="selectedAuthorFree" class="form-label">Tételek szerzője</label>
 			<select name="selectedAuthorFree" id="selectedAuthorFree" class="form-select"
@@ -120,7 +124,8 @@
 		</div>
 	</div>
 </div>
-<hr>
+<hr class="space-divider">
+
 <h2>Elérhető tételek listája</h2>
 <table class="table table-striped">
 	<thead>
@@ -182,13 +187,15 @@
 		</tr>
 	</tbody>
 </table>
-<hr>
+<hr class="space-divider">
 
 <div class="row">
 	<input type="text" [(ngModel)]="searchTermBorrowed" (input)="searchBooksBorrowed()" placeholder="Keresés...">
 </div>
+<hr class="space-divider">
+
 <div class="container">
-	<div class="row">
+	<div class="row" class="row gray-background">
 		<div class="col-md-3">
 			<label for="selectedAuthorBorrowed" class="form-label">Tételek szerzője</label>
 			<select name="selectedAuthorBorrowed" id="selectedAuthorBorrowed" class="form-select"
@@ -222,7 +229,8 @@
 		</div>
 	</div>
 </div>
-<hr>
+<hr class="space-divider">
+
 <h2>Kikölcsönzött tételek listája</h2>
 <table class="table table-striped">
 	<thead>

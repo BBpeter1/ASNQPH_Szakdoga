@@ -19,6 +19,7 @@ export class RegistrationComponent {
     phone: ['', [Validators.required, Validators.pattern(/^(?:\+?36|0)[\d-]{8,12}$/)]],
     szisz: ['', [Validators.required, Validators.pattern(/^\d{6}[A-Za-z]{2}$/)]],
     password: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z]).*$/)]],
+    isAdmin: false,
   });
 
   constructor(
@@ -43,5 +44,9 @@ export class RegistrationComponent {
           }
         }
       });
+    }
+
+    redirectToLogin() {
+      this.router.navigateByUrl('/login');
     }
 }

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private TOKEN_KEY = 'accessToken';
+  private IS_ADMIN_KEY = 'isAdmin';
 
   constructor(private router: Router) { }
 
@@ -16,6 +17,14 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  setIsAdmin(isAdmin: boolean) {
+    localStorage.setItem(this.IS_ADMIN_KEY, String(isAdmin));
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem(this.IS_ADMIN_KEY) == 'true';
   }
 
   removeToken() {
@@ -34,5 +43,13 @@ export class AuthService {
     }
 
     return isLoggedIn;
-}
+  }
+
+  onlyAdminAccess(): boolean {
+    if (!this.isAdmin()) {
+      this.router.navigateByUrl('/login');
+    }
+
+    return this.isAdmin();
+  }
 }
