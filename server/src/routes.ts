@@ -12,14 +12,14 @@ export function getRoutes() {
     router.get('/books', bookController.getAll);
     router.post('/books', checkUser, onlyAdmin, bookController.create);
     router.put('/books', checkUser, onlyAdmin, bookController.update);
-    router.get('/books/available', bookController.getAvailableBooks);
-    router.get('/books/borrowed',  bookController.getBorrowedBooks);
-    router.get('/books/userbooks',  bookController.getUserBooks);
+    router.get('/books/available',checkUser, bookController.getAvailableBooks);
+    router.get('/books/borrowed', checkUser, bookController.getBorrowedBooks);
+    router.get('/books/userbooks',checkUser , bookController.getUserBooks);
     router.get('/books/sold',  bookController.getSoldBooks);
     router.post('/books/borrow', checkUser, bookController.borrowBook);
     router.post('/books/sell', checkUser, bookController.sellBook);
     router.post('/books/return',checkUser, bookController.returnBook);
-    router.get('/books/overdue', onlyAdmin, bookController.getOverdueBooks);
+    router.get('/books/overdue', checkUser, onlyAdmin, bookController.getOverdueBooks);
     router.get('/books/:id', bookController.getOne);
     router.delete('/books/:id', checkUser, onlyAdmin, bookController.delete);
 

@@ -24,12 +24,14 @@ export class UserProductComponent implements OnInit {
     public authService: AuthService,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute) {
+    this.searchBooks();
     this.loadData();
 
   }
 
   ngOnInit(): void {
     this.loadData();
+    this.searchBooks();
     this.bookService.getAll().subscribe(
       {
         next: (books) => { this.books = books },
@@ -42,6 +44,7 @@ export class UserProductComponent implements OnInit {
     this.bookService.getAll().subscribe(
       (books) => {
         this.loadUserBooks();
+        this.searchBooks();
         this.books = books;
       },
       (error) => {
@@ -57,7 +60,7 @@ export class UserProductComponent implements OnInit {
       ).sort((a, b) => a.title.localeCompare(b.title));
     }
     else {
-      this.userBooks = this.userBooks.slice();
+      this.loadUserBooks();
     }
   }
 

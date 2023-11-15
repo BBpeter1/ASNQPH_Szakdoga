@@ -11,7 +11,7 @@
           <a class="nav-link" aria-current="page" href="#" *ngIf="authService.isLoggedIn()" routerLink="/product-list">Tételek</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#" *ngIf="authService.isLoggedIn()" routerLink="/user-product">Saját tételeim</a>
+          <a class="nav-link" aria-current="page" href="#" *ngIf="authService.isLoggedIn() && !authService.isAdmin()" routerLink="/user-product">Saját tételeim</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" *ngIf="authService.isLoggedIn() && authService.isAdmin()" routerLink="/product-form">Új tétel</a>

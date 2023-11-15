@@ -26,10 +26,10 @@ export class User implements UserDTO {
     @Column()
     isAdmin: boolean;
 
-    @OneToMany(() => User, user => user.borrowedBooks)
+    @OneToMany(() => Book, book => book.borrower)
     borrowedBooks: Book[];
 
-    @OneToMany(() => User, user => user.soldBooks)
+    @OneToMany(() => Book, book => book.sold)
     soldBooks: Book[];
 
     @Column({ unique: true })

@@ -84,11 +84,11 @@
 </table>
 <hr *ngIf="authService.isLoggedIn() && authService.isAdmin() " class="space-divider">
 
-<div class="row">
+<div class="row" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<input type="text" [(ngModel)]="searchTermFree" (input)="searchBooksFree()" placeholder="Keresés...">
 </div>
-<hr class="space-divider">
-<div class="container">
+<hr class="space-divider" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
+<div class="container" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<div class="row" class="row gray-background">
 		<div class="col-md-3">
 			<label for="selectedAuthorFree" class="form-label">Tételek szerzője</label>
@@ -126,8 +126,8 @@
 </div>
 <hr class="space-divider">
 
-<h2>Elérhető tételek listája</h2>
-<table class="table table-striped">
+<h2 *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">Elérhető tételek listája</h2>
+<table class="table table-striped" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<thead>
 		<tr>
 			<th scope="col">ID</th>
@@ -189,12 +189,12 @@
 </table>
 <hr class="space-divider">
 
-<div class="row">
+<div class="row" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<input type="text" [(ngModel)]="searchTermBorrowed" (input)="searchBooksBorrowed()" placeholder="Keresés...">
 </div>
-<hr class="space-divider">
+<hr class="space-divider" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 
-<div class="container">
+<div class="container" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<div class="row" class="row gray-background">
 		<div class="col-md-3">
 			<label for="selectedAuthorBorrowed" class="form-label">Tételek szerzője</label>
@@ -231,8 +231,8 @@
 </div>
 <hr class="space-divider">
 
-<h2>Kikölcsönzött tételek listája</h2>
-<table class="table table-striped">
+<h2 *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">Kikölcsönzött tételek listája</h2>
+<table class="table table-striped" *ngIf="authService.isLoggedIn() && !authService.isAdmin() ">
 	<thead>
 		<tr>
 			<th scope="col">ID</th>

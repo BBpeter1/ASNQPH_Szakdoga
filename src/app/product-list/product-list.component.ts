@@ -197,7 +197,7 @@ export class BookListComponent implements OnInit {
   sellBook(userId: number, bookId: number) {
     this.bookService.sellBook(userId, bookId).subscribe(
       () => {
-        this.toastr.success('Sikeresen megvetted a tételt!'),
+         this.toastr.success('Sikeresen megvetted a tételt!'),
           this.loadAvailableBooks();
       },
       (error) => {
@@ -256,6 +256,8 @@ export class BookListComponent implements OnInit {
     });
 
     if (!this.selectedAuthorFree && !this.selectedCategoryFree && !this.selectedStartDateFree && !this.selectedEndDateFree) {
+      this.getUniqueAuthorsFree();
+      this.getUniqueCategoriesFree();
       this.loadAvailableBooks();
     }
   }
@@ -276,6 +278,8 @@ export class BookListComponent implements OnInit {
     });
 
     if (!this.selectedAuthorBorrowed && !this.selectedCategoryBorrowed && !this.selectedStartDateBorrowed && !this.selectedEndDateBorrowed) {
+      this.getUniqueAuthorsBorrowed();
+      this.getUniqueCategoriesFree();
       this.loadBorrowedBooks();
     }
   }

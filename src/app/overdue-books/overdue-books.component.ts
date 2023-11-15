@@ -50,7 +50,7 @@ export class OverdueBooksComponent implements OnInit {
   sendEmail(): void {
     this.overdueBooks.forEach((book) => {
         const borrowerEmail = book.borrower.email;
-        const message = `Tétel neve: ${book.title} | Tétel kikölcsönzésének dátuma: ${book.borrowDate} | 
+        const message = `Tétel neve: ${book.title} | Tétel kategóriája: ${book.category} | Tétel kikölcsönzésének dátuma: ${book.borrowDate} | 
         Számított késés: ${book.delay} nap`;
         this.notificationService.sendEmail(borrowerEmail,message).then(
             (response) => {

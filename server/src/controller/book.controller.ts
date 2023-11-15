@@ -24,8 +24,8 @@ export class BookController extends Controller {
             const books = await this.repository
                 .createQueryBuilder('book')
                 .where('book.status = :status1 OR book.status = :status2', { status1: 'eladott', status2: 'kölcsönzött' })
-                .andWhere('book.borrower = :userId', { userId: user })
-                .andWhere('book.sold = :userId', { userId: user })
+                .orWhere('book.borrower = :userId', { userId: user.id })
+                .orWhere('book.sold = :userId', { userId: user.id })
                 .getMany();
 
             res.json(books);
@@ -123,19 +123,16 @@ export class BookController extends Controller {
         try {
             const { bookId } = req.body;
 
-            const user = await this.userRepository.findOneBy({ id: req.auth.id });
             const book = await this.repository.findOneBy({ id: bookId });
 
-            if (!user || !book) {
-                return res.status(404).json({ message: 'User or book not found' });
+            if (!book) {
+                return res.status(404).json({ message: 'Book not found' });
             }
-            user.borrowedBooks = user.borrowedBooks.filter(borrowedBook => borrowedBook.id !== book.id);
 
             book.borrower = null;
             book.status = 'szabad';
             book.borrowDate = null;
 
-            await this.repository.save(user);
             await this.repository.save(book);
 
             res.json({ message: 'Book returned successfully' });
