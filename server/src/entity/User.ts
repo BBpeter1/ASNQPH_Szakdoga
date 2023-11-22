@@ -8,16 +8,16 @@ export class User implements UserDTO {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({nullable: true, type: 'text'})
+    @Column({nullable: false, type: 'text'})
     name: string
 
-    @Column({nullable: true, type: 'text'})
+    @Column({nullable: false, type: 'text'})
     phone: string
 
-    @Column({nullable: true,type: 'text'})
+    @Column({nullable: false,type: 'text'})
     szisz: string;
 
-    @Column({nullable: true, type: 'text'})
+    @Column({nullable: false, type: 'text'})
     address: string;
 
     @Column()
@@ -32,10 +32,10 @@ export class User implements UserDTO {
     @OneToMany(() => Book, book => book.sold)
     soldBooks: Book[];
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: false})
     email: string;
 
-    @Column({ select: false })
+    @Column({ select: false, nullable: false })
     password: string;
 
 }

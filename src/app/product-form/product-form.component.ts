@@ -19,14 +19,14 @@ export class BookFormComponent implements OnInit {
 
   bookForm = this.formBuilder.group({
     id: this.formBuilder.control(0),
-    title: ['', Validators.required],
-    description:['', Validators.required],
-    Author: ['', Validators.required],
+    title: ['', [Validators.required, Validators.minLength(1)]],
+    description: ['', [Validators.required, Validators.minLength(1)]],
+    Author: ['', [Validators.required, Validators.minLength(1)]],
     status: this.formBuilder.control('szabad'),
-    category: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0.01)]],
+    category: ['', [Validators.required, Validators.minLength(1)]],
+    price: [0, [Validators.required, Validators.min(1)]],
     date: this.formBuilder.control(new Date().toISOString().split('T')[0])
-  });
+});
 
   toastrService: any;
 
@@ -65,19 +65,24 @@ export class BookFormComponent implements OnInit {
   saveProduct() {
     const book = this.bookForm.value as BookDTO;
 
+    if (!book.title || !book.description || !book.Author || !book.category || book.price) {
+        this.toastr.error('Minden mezőt ki kell tölteni!', 'Hiányzó adat');
+        return;
+    }
+
     if (this.isNewProduct) {
-      this.bookService.create(book).subscribe({
-        next: (book) => { this.toastr.success('Tétel létrehozva! , id:' + book.id, 'Product created') },
-        error: (err) => { this.toastr.error('Hiba', 'Hiba') }
-      });
+        this.bookService.create(book).subscribe({
+            next: (book) => { this.toastr.success('Tétel létrehozva! , id:' + book.id, 'Product created') },
+            error: (err) => { this.toastr.error('Hiba', 'Hiba') }
+        });
+    } else {
+        this.bookService.update(book).subscribe({
+            next: (book) => { this.toastr.success('Tétel módosítva!, id:' + book.id, 'Product updated') },
+            error: (err) => { this.toastr.error('Hiba', 'Hiba') }
+        });
     }
-    else {
-      this.bookService.update(book).subscribe({
-        next: (book) => { this.toastr.success('Tétel módosítva!, id:' + book.id, 'Product updated') },
-        error: (err) => { this.toastr.error('Hiba', 'Hiba') }
-      });
-    }
-  }
+}
+
 
   compareObjects(obj1: any, obj2: any) {
     return obj1 && obj2 && obj1.id == obj2.id;

@@ -8,22 +8,22 @@ export class Book implements BookDTO {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({nullable: true, type: 'text'})
+    @Column({nullable: false, type: 'text'})
     title: string;
 
-    @Column({nullable: true})
+    @Column({nullable: false})
     price: number
 
-    @Column({nullable: true, type: 'text'})
+    @Column({nullable: false, type: 'text'})
     category: string;
 
-    @Column({nullable: true, type: 'text' })
+    @Column({nullable: false, type: 'text' })
     description: string;
 
-    @Column({nullable: true, type: 'text' })
+    @Column({nullable: false, type: 'text' })
     Author: string;
 
-    @Column({nullable: true, type: 'date' })
+    @Column({nullable: false, type: 'date' })
     date: string;
 
     @Column({nullable: true, type: 'date' })
@@ -32,7 +32,7 @@ export class Book implements BookDTO {
     @Column({nullable: true, type: 'date' })
     soldDate: string;
 
-    @Column({nullable: true, type: 'text' })
+    @Column({nullable: false, type: 'text' })
     status: string;
 
     @ManyToOne(() => User, user => user.borrowedBooks, {eager:true})

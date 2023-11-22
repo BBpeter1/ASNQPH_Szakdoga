@@ -106,6 +106,11 @@ export class BookListComponent implements OnInit {
   }
 
   deleteBook(book: BookDTO) {
+    if (book.status !== 'szabad') {
+      this.toastrService.error('A tétel nem törölhető, mert kölcsönzött vagy eladott!', 'Hiba');
+      return; 
+    }
+  
     this.bookService.delete(book.id).subscribe({
       next: () => {
         const index = this.books.indexOf(book);

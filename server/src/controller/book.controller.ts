@@ -8,6 +8,27 @@ export class BookController extends Controller {
     repository = AppDataSource.getRepository(Book);
     userRepository = AppDataSource.getRepository(User);
 
+    update = async (req, res) => {
+        try {
+            const entity = this.repository.create(req.body as object);
+            const entityToUpdate = await this.repository.findOneBy({ id: entity.id });
+            if (!entityToUpdate) {
+                return this.handleError(res, null, 404, 'Not found.');
+            }
+    
+            const acceptableCategories = ['cd', 'kazetta', 'könyv'];
+            if (!acceptableCategories.includes(entity.category)) {
+                return this.handleError(res, null, 400, 'Invalid category.');
+            }
+    
+            const result = await this.repository.save(entity);
+            res.json(result);
+        } catch (err) {
+            this.handleError(res, err);
+        }
+    };
+    
+
     getAvailableBooks = async (req, res) => {
         try {
             const books = await this.repository.find({ where: { status: 'szabad' } });

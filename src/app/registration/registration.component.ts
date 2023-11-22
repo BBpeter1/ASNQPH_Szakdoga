@@ -30,6 +30,11 @@ export class RegistrationComponent {
     private toastrService: ToastrService) { }
 
     registration() {
+      if (this.registrationForm.invalid) {
+        this.toastrService.error('Ellenőrizze az űrlapot, mert néhány mező üres vagy érvénytelen!', 'Hiba');
+        return;
+      }
+    
       const regiData = this.registrationForm.value as UserDTO;
     
       this.userService.create(regiData).subscribe({
@@ -44,7 +49,7 @@ export class RegistrationComponent {
           }
         }
       });
-    }
+    }    
 
     redirectToLogin() {
       this.router.navigateByUrl('/login');
